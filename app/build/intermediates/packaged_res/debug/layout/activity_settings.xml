@@ -75,30 +75,78 @@
             android:textSize="24sp"
             android:layout_marginBottom="24dp"/>
 
+        <!-- Button Color Section -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_btn_color"
+            android:text="Button Hue"
             android:textColor="#FFFFFF"/>
         <SeekBar
             android:id="@+id/seekBtnHue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:max="360"
-            android:progress="200"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="8dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_border_color"
+            android:text="Button Saturation"
+            android:textColor="#FFFFFF"/>
+        <SeekBar
+            android:id="@+id/seekBtnSat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button Brightness"
+            android:textColor="#FFFFFF"/>
+        <SeekBar
+            android:id="@+id/seekBtnVal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Border Color Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Border Hue"
             android:textColor="#FFFFFF"/>
         <SeekBar
             android:id="@+id/seekBorderHue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:max="360"
-            android:progress="0"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Border Saturation"
+            android:textColor="#FFFFFF"/>
+        <SeekBar
+            android:id="@+id/seekBorderSat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Border Brightness"
+            android:textColor="#FFFFFF"/>
+        <SeekBar
+            android:id="@+id/seekBorderVal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
             android:layout_marginBottom="16dp"/>
 
         <TextView
@@ -111,7 +159,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:max="20"
-            android:progress="5"
             android:layout_marginBottom="16dp"/>
 
         <TextView
@@ -124,7 +171,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:max="40"
-            android:progress="12"
             android:layout_marginBottom="16dp"/>
 
         <TextView
@@ -137,7 +183,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:max="30"
-            android:progress="16"
             android:layout_marginBottom="16dp"/>
 
         <TextView

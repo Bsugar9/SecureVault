@@ -30,7 +30,7 @@ class AnimationView(context: Context, attrs: AttributeSet? = null) : View(contex
 
     // Starfield state
     private val stars = mutableListOf<Star>()
-    private val starCount = 300 // Doubled from 150
+    private val starCount = 300 
     private val maxDepth = 1000f
 
     // Lava state
@@ -50,6 +50,10 @@ class AnimationView(context: Context, attrs: AttributeSet? = null) : View(contex
     private val wormholeRings = mutableListOf<WormholeRing>()
     private var wormholeAngle = 0f
 
+    // Northern Lights state
+    private var auroraTime = 0f
+    private val auroraWaves = mutableListOf<AuroraWave>()
+
     fun setAnimation(type: String) {
         animationType = type
         particles.clear()
@@ -58,6 +62,7 @@ class AnimationView(context: Context, attrs: AttributeSet? = null) : View(contex
         lavaParticles.clear()
         tornadoParticles.clear()
         wormholeRings.clear()
+        auroraWaves.clear()
         
         flashAlpha = 0
         
@@ -66,6 +71,7 @@ class AnimationView(context: Context, attrs: AttributeSet? = null) : View(contex
             "Starfield" -> setupStarfield()
             "Tornado" -> setupTornado()
             "Wormhole" -> setupWormhole()
+            "Northern Lights" -> setupAurora()
         }
         invalidate()
     }
@@ -100,9 +106,18 @@ class AnimationView(context: Context, attrs: AttributeSet? = null) : View(contex
 
     private fun setupWormhole() {
         if (width > 0) {
-            for (i in 0 until 40) {
-                wormholeRings.add(WormholeRing(i * 25f, random))
+            for (i in 0 until 30) {
+                wormholeRings.add(WormholeRing(i * 35f, random))
             }
+        }
+    }
+
+    private fun setupAurora() {
+        if (width > 0) {
+            // Create a few overlapping aurora waves
+            auroraWaves.add(AuroraWave(Color.parseColor("#00FF41"), 0.5f, 0.4f, 1.2f)) // Emerald
+            auroraWaves.add(AuroraWave(Color.parseColor("#7F00FF"), 0.7f, 0.3f, 0.8f)) // Violet
+            auroraWaves.add(AuroraWave(Color.parseColor("#00FFFF"), 0.3f, 0.5f, 1.5f)) // Cyan
         }
     }
 
@@ -113,6 +128,7 @@ class AnimationView(context: Context, attrs: AttributeSet? = null) : View(contex
             "Starfield" -> setupStarfield()
             "Tornado" -> setupTornado()
             "Wormhole" -> setupWormhole()
+            "Northern Lights" -> setupAurora()
         }
     }
 
@@ -127,6 +143,7 @@ class AnimationView(context: Context, attrs: AttributeSet? = null) : View(contex
             "Lava" -> drawLava(canvas)
             "Tornado" -> drawTornado(canvas)
             "Wormhole" -> drawWormhole(canvas)
+            "Northern Lights" -> drawAurora(canvas)
         }
         
         if (animationType != "None") {
@@ -218,23 +235,18 @@ class AnimationView(context: Context, attrs: AttributeSet? = null) : View(contex
         val centerX = width / 2f
         val centerY = height / 2f
         paint.style = Paint.Style.STROKE
-        paint.strokeWidth = 6f // Thicker lines for Hyperdrive
+        paint.strokeWidth = 6f
         for (star in stars) {
             val px = (star.x / star.z) * 100f + centerX
             val py = (star.y / star.z) * 100f + centerY
-            
-            star.z -= 25f // Faster speed
-            
+            star.z -= 25f
             if (star.z < maxDepth) {
                 val nextPx = (star.x / star.z) * 100f + centerX
                 val nextPy = (star.y / star.z) * 100f + centerY
-                
                 val brightness = (255 * (1 - star.z / maxDepth)).toInt().coerceIn(0, 255)
                 paint.setARGB(brightness, 255, 255, 255)
-                
                 canvas.drawLine(px, py, nextPx, nextPy, paint)
             }
-            
             if (star.z <= 10f) {
                 star.z = maxDepth
                 star.x = (random.nextFloat() - 0.5f) * width * 2
@@ -325,39 +337,60 @@ class AnimationView(context: Context, attrs: AttributeSet? = null) : View(contex
         val centerX = width / 2f
         val centerY = height / 2f
         wormholeAngle += 0.05f
-        
         paint.style = Paint.Style.STROKE
-        paint.strokeWidth = 6f
-        
         for (ring in wormholeRings) {
-            ring.z += 8f
+            ring.z += 12f
             if (ring.z > 1000f) {
                 ring.z = 0f
                 ring.hue = random.nextFloat() * 360f
             }
-            
-            // Expand size to cover entire screen (using max dimension)
+            val progress = ring.z / 1000f
             val screenSize = max(width, height).toFloat()
-            val size = (ring.z / 1000f).pow(1.5f) * screenSize * 1.5f
-            val alpha = (ring.z / 1000f * 255).toInt().coerceIn(0, 255)
-            
-            val offsetX = sin(wormholeAngle + ring.z * 0.01f) * 80f
-            val offsetY = cos(wormholeAngle + ring.z * 0.01f) * 80f
-            
-            paint.color = Color.HSVToColor(alpha, floatArrayOf(ring.hue, 0.8f, 1f))
-            
+            val size = progress.pow(1.8f) * screenSize * 2.5f
+            val alpha = (progress * 255).toInt().coerceIn(0, 255)
+            val offsetX = sin(wormholeAngle + ring.z * 0.008f) * 150f
+            val offsetY = cos(wormholeAngle + ring.z * 0.008f) * 150f
+            val color = Color.HSVToColor(alpha, floatArrayOf(ring.hue, 0.8f, 1f))
+            paint.color = color
+            paint.strokeWidth = 20f * progress + 2f
+            paint.setShadowLayer(30f * progress, 0f, 0f, color)
+            canvas.drawCircle(centerX + offsetX, centerY + offsetY, size / 2, paint)
+        }
+        paint.clearShadowLayer()
+        paint.style = Paint.Style.FILL
+    }
+
+    private fun drawAurora(canvas: Canvas) {
+        auroraTime += 0.015f
+        paint.style = Paint.Style.FILL
+        
+        for (wave in auroraWaves) {
             val path = Path()
-            val sides = 8
-            for (i in 0 until sides) {
-                val angle = (i * 2 * PI / sides).toFloat()
-                val rx = centerX + (size/2) * cos(angle) + offsetX
-                val ry = centerY + (size/2) * sin(angle) + offsetY
-                if (i == 0) path.moveTo(rx, ry) else path.lineTo(rx, ry)
+            path.moveTo(0f, height.toFloat())
+            
+            val baseHeight = height * wave.baseY
+            val waveAmplitude = height * wave.amplitude
+            
+            for (x in 0..width step 10) {
+                val angle = (x.toFloat() / width) * 2 * PI.toFloat() * 1.5f + (auroraTime * wave.speed)
+                val y = baseHeight + sin(angle) * waveAmplitude + (cos(auroraTime * 0.5f) * 50f)
+                path.lineTo(x.toFloat(), y)
             }
+            
+            path.lineTo(width.toFloat(), height.toFloat())
             path.close()
+            
+            // vertical gradient for the "curtain" effect
+            val gradient = LinearGradient(0f, 0f, 0f, height.toFloat(),
+                intArrayOf(Color.TRANSPARENT, wave.color, Color.TRANSPARENT),
+                floatArrayOf(0f, 0.4f, 1f),
+                Shader.TileMode.CLAMP)
+            
+            paint.shader = gradient
+            paint.alpha = 150
             canvas.drawPath(path, paint)
         }
-        paint.style = Paint.Style.FILL
+        paint.shader = null
     }
 
     private fun interpolateColor(a: Int, b: Int, proportion: Float): Int {
@@ -430,4 +463,6 @@ class AnimationView(context: Context, attrs: AttributeSet? = null) : View(contex
     private class WormholeRing(var z: Float, random: Random) {
         var hue = random.nextFloat() * 360f
     }
+
+    private class AuroraWave(val color: Int, val baseY: Float, val amplitude: Float, val speed: Float)
 }

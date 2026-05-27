@@ -1,7 +1,7 @@
 [
     {
-        "merged": "com.example.securedb.app-merged_res-36:/layout_activity_login.xml.flat",
-        "source": "com.example.securedb.app-main-38:/layout/activity_login.xml"
+        "merged": "C:\\Users\\Mike\\.gradle\\daemon\\8.5\\com.example.securedb.app-merged_res-36:\\layout_dialog_add_category.xml.flat",
+        "source": "C:\\Users\\Mike\\.gradle\\daemon\\8.5\\com.example.securedb.app-main-38:\\layout\\dialog_add_category.xml"
     },
     {
         "merged": "com.example.securedb.app-merged_res-36:/layout_activity_settings.xml.flat",
@@ -10,38 +10,6 @@
     {
         "merged": "C:\\Users\\Mike\\.gradle\\daemon\\8.5\\com.example.securedb.app-merged_res-36:\\layout_activity_settings.xml.flat",
         "source": "C:\\Users\\Mike\\.gradle\\daemon\\8.5\\com.example.securedb.app-main-38:\\layout\\activity_settings.xml"
-    },
-    {
-        "merged": "com.example.securedb.app-merged_res-36:/layout_dialog_verify_password.xml.flat",
-        "source": "com.example.securedb.app-main-38:/layout/dialog_verify_password.xml"
-    },
-    {
-        "merged": "com.example.securedb.app-merged_res-36:/layout_activity_setup.xml.flat",
-        "source": "com.example.securedb.app-main-38:/layout/activity_setup.xml"
-    },
-    {
-        "merged": "C:\\Users\\Mike\\.gradle\\daemon\\8.5\\com.example.securedb.app-merged_res-36:\\layout_fragment_settings.xml.flat",
-        "source": "C:\\Users\\Mike\\.gradle\\daemon\\8.5\\com.example.securedb.app-main-38:\\layout\\fragment_settings.xml"
-    },
-    {
-        "merged": "C:\\Users\\Mike\\.gradle\\daemon\\8.5\\com.example.securedb.app-merged_res-36:\\layout_dialog_verify_password.xml.flat",
-        "source": "C:\\Users\\Mike\\.gradle\\daemon\\8.5\\com.example.securedb.app-main-38:\\layout\\dialog_verify_password.xml"
-    },
-    {
-        "merged": "C:\\Users\\Mike\\.gradle\\daemon\\8.5\\com.example.securedb.app-merged_res-36:\\layout_activity_setup.xml.flat",
-        "source": "C:\\Users\\Mike\\.gradle\\daemon\\8.5\\com.example.securedb.app-main-38:\\layout\\activity_setup.xml"
-    },
-    {
-        "merged": "C:\\Users\\Mike\\.gradle\\daemon\\8.5\\com.example.securedb.app-merged_res-36:\\layout_dialog_add_category.xml.flat",
-        "source": "C:\\Users\\Mike\\.gradle\\daemon\\8.5\\com.example.securedb.app-main-38:\\layout\\dialog_add_category.xml"
-    },
-    {
-        "merged": "com.example.securedb.app-merged_res-36:/layout_dialog_add_entry.xml.flat",
-        "source": "com.example.securedb.app-main-38:/layout/dialog_add_entry.xml"
-    },
-    {
-        "merged": "com.example.securedb.app-merged_res-36:/layout_activity_main.xml.flat",
-        "source": "com.example.securedb.app-main-38:/layout/activity_main.xml"
     },
     {
         "merged": "C:\\Users\\Mike\\.gradle\\daemon\\8.5\\com.example.securedb.app-merged_res-36:\\layout_activity_main.xml.flat",
@@ -56,11 +24,19 @@
         "source": "C:\\Users\\Mike\\.gradle\\daemon\\8.5\\com.example.securedb.app-main-38:\\layout\\item_entry.xml"
     },
     {
+        "merged": "C:\\Users\\Mike\\.gradle\\daemon\\8.5\\com.example.securedb.app-merged_res-36:\\layout_fragment_settings.xml.flat",
+        "source": "C:\\Users\\Mike\\.gradle\\daemon\\8.5\\com.example.securedb.app-main-38:\\layout\\fragment_settings.xml"
+    },
+    {
         "merged": "C:\\Users\\Mike\\.gradle\\daemon\\8.5\\com.example.securedb.app-merged_res-36:\\layout_activity_login.xml.flat",
         "source": "C:\\Users\\Mike\\.gradle\\daemon\\8.5\\com.example.securedb.app-main-38:\\layout\\activity_login.xml"
     },
     {
-        "merged": "com.example.securedb.app-merged_res-36:/layout_dialog_add_category.xml.flat",
-        "source": "com.example.securedb.app-main-38:/layout/dialog_add_category.xml"
+        "merged": "C:\\Users\\Mike\\.gradle\\daemon\\8.5\\com.example.securedb.app-merged_res-36:\\layout_dialog_verify_password.xml.flat",
+        "source": "C:\\Users\\Mike\\.gradle\\daemon\\8.5\\com.example.securedb.app-main-38:\\layout\\dialog_verify_password.xml"
+    },
+    {
+        "merged": "C:\\Users\\Mike\\.gradle\\daemon\\8.5\\com.example.securedb.app-merged_res-36:\\layout_activity_setup.xml.flat",
+        "source": "C:\\Users\\Mike\\.gradle\\daemon\\8.5\\com.example.securedb.app-main-38:\\layout\\activity_setup.xml"
     }
 ]

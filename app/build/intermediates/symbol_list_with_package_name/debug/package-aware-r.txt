@@ -3390,7 +3390,11 @@ id search_plate
 id search_src_text
 id search_voice_btn
 id seekBorderHue
+id seekBorderSat
+id seekBorderVal
 id seekBtnHue
+id seekBtnSat
+id seekBtnVal
 id seekFontSize
 id seekGlow
 id seekRadius

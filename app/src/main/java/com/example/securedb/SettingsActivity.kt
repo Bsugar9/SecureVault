@@ -9,12 +9,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.card.MaterialCardView
 import java.io.FileInputStream
-import java.io.FileOutputStream
 
 class SettingsActivity : BaseActivity() {
 
     private var currentBtnHue = 200
+    private var currentBtnSat = 80
+    private var currentBtnVal = 90
     private var currentBorderHue = 0
+    private var currentBorderSat = 70
+    private var currentBorderVal = 100
     private var currentGlow = 10
     private var currentRadius = 12
     private var currentFontSize = 16
@@ -53,7 +56,11 @@ class SettingsActivity : BaseActivity() {
         previewAnimation = findViewById(R.id.previewAnimation)
 
         val seekBtnHue = findViewById<SeekBar>(R.id.seekBtnHue)
+        val seekBtnSat = findViewById<SeekBar>(R.id.seekBtnSat)
+        val seekBtnVal = findViewById<SeekBar>(R.id.seekBtnVal)
         val seekBorderHue = findViewById<SeekBar>(R.id.seekBorderHue)
+        val seekBorderSat = findViewById<SeekBar>(R.id.seekBorderSat)
+        val seekBorderVal = findViewById<SeekBar>(R.id.seekBorderVal)
         val seekGlow = findViewById<SeekBar>(R.id.seekGlow)
         val seekRadius = findViewById<SeekBar>(R.id.seekRadius)
         val seekFontSize = findViewById<SeekBar>(R.id.seekFontSize)
@@ -71,7 +78,11 @@ class SettingsActivity : BaseActivity() {
 
         // Load current values
         currentBtnHue = ThemeManager.getBtnHue(this)
+        currentBtnSat = ThemeManager.getBtnSat(this)
+        currentBtnVal = ThemeManager.getBtnVal(this)
         currentBorderHue = ThemeManager.getBorderHue(this)
+        currentBorderSat = ThemeManager.getBorderSat(this)
+        currentBorderVal = ThemeManager.getBorderVal(this)
         currentGlow = ThemeManager.getGlow(this)
         currentRadius = ThemeManager.getRadius(this)
         currentFontSize = ThemeManager.getFontSize(this)
@@ -82,7 +93,11 @@ class SettingsActivity : BaseActivity() {
         currentScaleType = ThemeManager.getBgScaleType(this)
 
         seekBtnHue.progress = currentBtnHue
+        seekBtnSat.progress = currentBtnSat
+        seekBtnVal.progress = currentBtnVal
         seekBorderHue.progress = currentBorderHue
+        seekBorderSat.progress = currentBorderSat
+        seekBorderVal.progress = currentBorderVal
         seekGlow.progress = currentGlow
         seekRadius.progress = currentRadius
         seekFontSize.progress = currentFontSize
@@ -93,7 +108,7 @@ class SettingsActivity : BaseActivity() {
 
         setupSpinner(spinnerScale, arrayOf("CENTER_CROP", "FIT_CENTER", "FIT_XY", "CENTER_INSIDE"), currentScaleType) { currentScaleType = it }
         setupSpinner(spinnerFont, arrayOf("DEFAULT", "MONOSPACE", "SERIF", "SANS_SERIF"), currentFontType) { currentFontType = it }
-        setupSpinner(spinnerAnim, arrayOf("None", "Fireworks", "Digital Rain", "Bolt Lightning", "Starfield", "Lava", "Tornado", "Wormhole"), currentAnimation) {
+        setupSpinner(spinnerAnim, arrayOf("None", "Fireworks", "Digital Rain", "Bolt Lightning", "Starfield", "Lava", "Tornado", "Wormhole", "Northern Lights"), currentAnimation) { 
             currentAnimation = it
             previewAnimation.setAnimation(it)
         }
@@ -105,7 +120,11 @@ class SettingsActivity : BaseActivity() {
         updatePreview()
 
         seekBtnHue.setOnSeekBarChangeListener(createListener { currentBtnHue = it })
+        seekBtnSat.setOnSeekBarChangeListener(createListener { currentBtnSat = it })
+        seekBtnVal.setOnSeekBarChangeListener(createListener { currentBtnVal = it })
         seekBorderHue.setOnSeekBarChangeListener(createListener { currentBorderHue = it })
+        seekBorderSat.setOnSeekBarChangeListener(createListener { currentBorderSat = it })
+        seekBorderVal.setOnSeekBarChangeListener(createListener { currentBorderVal = it })
         seekGlow.setOnSeekBarChangeListener(createListener { currentGlow = it })
         seekRadius.setOnSeekBarChangeListener(createListener { currentRadius = it })
         seekFontSize.setOnSeekBarChangeListener(createListener { currentFontSize = it })
@@ -113,7 +132,7 @@ class SettingsActivity : BaseActivity() {
         previewButton.setOnClickListener { showColorCodeDialog() }
 
         btnSave.setOnClickListener {
-            ThemeManager.saveTheme(this, currentBtnHue, currentBorderHue, currentGlow, currentRadius, currentAnimation, checkAnimAll.isChecked, currentFontType, currentFontSize, selectedBgUri, currentScaleType)
+            ThemeManager.saveTheme(this, currentBtnHue, currentBtnSat, currentBtnVal, currentBorderHue, currentBorderSat, currentBorderVal, currentGlow, currentRadius, currentAnimation, checkAnimAll.isChecked, currentFontType, currentFontSize, selectedBgUri, currentScaleType)
             ThemeManager.saveSecuritySettings(this, checkPreventScreenshots.isChecked, checkBiometrics.isChecked, checkAutoLock.isChecked)
             ThemeManager.applySecurityFlags(this)
             Toast.makeText(this, "Settings Saved!", Toast.LENGTH_SHORT).show()
@@ -173,7 +192,13 @@ class SettingsActivity : BaseActivity() {
                     val hsv = FloatArray(3)
                     Color.colorToHSV(color, hsv)
                     currentBtnHue = hsv[0].toInt()
+                    currentBtnSat = (hsv[1] * 100).toInt()
+                    currentBtnVal = (hsv[2] * 100).toInt()
+                    
                     findViewById<SeekBar>(R.id.seekBtnHue).progress = currentBtnHue
+                    findViewById<SeekBar>(R.id.seekBtnSat).progress = currentBtnSat
+                    findViewById<SeekBar>(R.id.seekBtnVal).progress = currentBtnVal
+                    
                     updatePreview()
                 } catch (e: Exception) {
                     Toast.makeText(this, "Invalid Code", Toast.LENGTH_SHORT).show()
@@ -193,13 +218,13 @@ class SettingsActivity : BaseActivity() {
     }
 
     private fun updatePreview() {
-        ThemeManager.applyThemeToButton(previewButton, currentBtnHue, currentGlow, currentRadius, currentFontType, currentFontSize)
-        ThemeManager.applyThemeToEditText(previewEditText, currentBorderHue, currentGlow, currentRadius, currentFontType, currentFontSize)
-        ThemeManager.applyThemeToCard(previewCard, currentBorderHue, currentRadius)
+        ThemeManager.applyThemeToButton(previewButton, currentBtnHue, currentBtnSat, currentBtnVal, currentGlow, currentRadius, currentFontType, currentFontSize)
+        ThemeManager.applyThemeToEditText(previewEditText, currentBorderHue, currentBorderSat, currentBorderVal, currentGlow, currentRadius, currentFontType, currentFontSize)
+        ThemeManager.applyThemeToCard(previewCard, currentBorderHue, currentBorderSat, currentBorderVal, currentRadius)
         ThemeManager.applyFontToView(previewCardText, currentFontType, currentFontSize)
         
-        ThemeManager.applyThemeToButton(findViewById(R.id.btnViewLogs), currentBtnHue, currentGlow, currentRadius, currentFontType, currentFontSize)
-        ThemeManager.applyThemeToButton(findViewById(R.id.btnExportVault), currentBtnHue, currentGlow, currentRadius, currentFontType, currentFontSize)
-        ThemeManager.applyThemeToButton(findViewById(R.id.btnSaveTheme), currentBtnHue, currentGlow, currentRadius, currentFontType, currentFontSize)
+        ThemeManager.applyThemeToButton(findViewById(R.id.btnViewLogs), currentBtnHue, currentBtnSat, currentBtnVal, currentGlow, currentRadius, currentFontType, currentFontSize)
+        ThemeManager.applyThemeToButton(findViewById(R.id.btnExportVault), currentBtnHue, currentBtnSat, currentBtnVal, currentGlow, currentRadius, currentFontType, currentFontSize)
+        ThemeManager.applyThemeToButton(findViewById(R.id.btnSaveTheme), currentBtnHue, currentBtnSat, currentBtnVal, currentGlow, currentRadius, currentFontType, currentFontSize)
     }
 }

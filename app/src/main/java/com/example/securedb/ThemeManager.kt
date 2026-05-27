@@ -16,7 +16,11 @@ import com.google.android.material.card.MaterialCardView
 object ThemeManager {
     private const val PREFS_NAME = "theme_prefs"
     private const val KEY_BTN_HUE = "btn_hue"
+    private const val KEY_BTN_SAT = "btn_sat"
+    private const val KEY_BTN_VAL = "btn_val"
     private const val KEY_BORDER_HUE = "border_hue"
+    private const val KEY_BORDER_SAT = "border_sat"
+    private const val KEY_BORDER_VAL = "border_val"
     private const val KEY_GLOW = "glow"
     private const val KEY_RADIUS = "radius"
     private const val KEY_ANIMATION = "animation_type"
@@ -31,11 +35,15 @@ object ThemeManager {
     private const val KEY_BIOMETRICS_ENABLED = "biometrics_enabled"
     private const val KEY_AUTO_LOCK = "auto_lock"
 
-    fun saveTheme(context: Context, btnHue: Int, borderHue: Int, glow: Int, radius: Int, animation: String, animAll: Boolean, fontType: String, fontSize: Int, bgUri: String?, bgScale: String) {
+    fun saveTheme(context: Context, btnHue: Int, btnSat: Int, btnVal: Int, borderHue: Int, borderSat: Int, borderVal: Int, glow: Int, radius: Int, animation: String, animAll: Boolean, fontType: String, fontSize: Int, bgUri: String?, bgScale: String) {
         val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         prefs.edit().apply {
             putInt(KEY_BTN_HUE, btnHue)
+            putInt(KEY_BTN_SAT, btnSat)
+            putInt(KEY_BTN_VAL, btnVal)
             putInt(KEY_BORDER_HUE, borderHue)
+            putInt(KEY_BORDER_SAT, borderSat)
+            putInt(KEY_BORDER_VAL, borderVal)
             putInt(KEY_GLOW, glow)
             putInt(KEY_RADIUS, radius)
             putString(KEY_ANIMATION, animation)
@@ -59,7 +67,13 @@ object ThemeManager {
     }
 
     fun getBtnHue(context: Context) = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).getInt(KEY_BTN_HUE, 200)
+    fun getBtnSat(context: Context) = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).getInt(KEY_BTN_SAT, 80)
+    fun getBtnVal(context: Context) = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).getInt(KEY_BTN_VAL, 90)
+    
     fun getBorderHue(context: Context) = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).getInt(KEY_BORDER_HUE, 0)
+    fun getBorderSat(context: Context) = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).getInt(KEY_BORDER_SAT, 70)
+    fun getBorderVal(context: Context) = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).getInt(KEY_BORDER_VAL, 100)
+
     fun getGlow(context: Context) = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).getInt(KEY_GLOW, 10)
     fun getRadius(context: Context) = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).getInt(KEY_RADIUS, 12)
     fun getAnimation(context: Context) = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).getString(KEY_ANIMATION, "None") ?: "None"
@@ -73,15 +87,17 @@ object ThemeManager {
     fun getBiometricsEnabled(context: Context) = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).getBoolean(KEY_BIOMETRICS_ENABLED, false)
     fun getAutoLock(context: Context) = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).getBoolean(KEY_AUTO_LOCK, true)
 
-    fun applyThemeToButton(button: Button, btnHue: Int? = null, glow: Int? = null, radius: Int? = null, fontType: String? = null, fontSize: Int? = null) {
+    fun applyThemeToButton(button: Button, hue: Int? = null, sat: Int? = null, valPercent: Int? = null, glow: Int? = null, radius: Int? = null, fontType: String? = null, fontSize: Int? = null) {
         val context = button.context
-        val finalHue = btnHue ?: getBtnHue(context)
+        val finalHue = hue ?: getBtnHue(context)
+        val finalSat = sat ?: getBtnSat(context)
+        val finalVal = valPercent ?: getBtnVal(context)
         val finalGlow = glow ?: getGlow(context)
         val finalRadius = radius ?: getRadius(context)
         val finalFont = fontType ?: getFontType(context)
         val finalSize = fontSize ?: getFontSize(context)
 
-        val finalColor = Color.HSVToColor(floatArrayOf(finalHue.toFloat(), 0.8f, 0.9f))
+        val finalColor = Color.HSVToColor(floatArrayOf(finalHue.toFloat(), finalSat / 100f, finalVal / 100f))
 
         val drawable = GradientDrawable()
         drawable.setColor(finalColor)
@@ -94,16 +110,18 @@ object ThemeManager {
         applyFontToView(button, finalFont, finalSize)
     }
 
-    fun applyThemeToEditText(editText: EditText, borderHue: Int? = null, glow: Int? = null, radius: Int? = null, fontType: String? = null, fontSize: Int? = null) {
+    fun applyThemeToEditText(editText: EditText, hue: Int? = null, sat: Int? = null, valPercent: Int? = null, glow: Int? = null, radius: Int? = null, fontType: String? = null, fontSize: Int? = null) {
         val context = editText.context
-        val finalHue = borderHue ?: getBorderHue(context)
+        val finalHue = hue ?: getBorderHue(context)
+        val finalSat = sat ?: getBorderSat(context)
+        val finalVal = valPercent ?: getBorderVal(context)
         val finalGlow = glow ?: getGlow(context)
         val finalRadius = radius ?: getRadius(context)
         val finalFont = fontType ?: getFontType(context)
         val globalSize = fontSize ?: getFontSize(context)
         val finalSize = if (globalSize > 18) 18 else globalSize
 
-        val borderColor = Color.HSVToColor(floatArrayOf(finalHue.toFloat(), 0.7f, 1.0f))
+        val borderColor = Color.HSVToColor(floatArrayOf(finalHue.toFloat(), finalSat / 100f, finalVal / 100f))
 
         val drawable = GradientDrawable()
         drawable.setStroke(if (finalGlow > 0) finalGlow / 2 else 2, borderColor)
@@ -114,12 +132,14 @@ object ThemeManager {
         applyFontToView(editText, finalFont, finalSize)
     }
 
-    fun applyThemeToCard(card: MaterialCardView, borderHue: Int? = null, radius: Int? = null) {
+    fun applyThemeToCard(card: MaterialCardView, hue: Int? = null, sat: Int? = null, valPercent: Int? = null, radius: Int? = null) {
         val context = card.context
-        val finalHue = borderHue ?: getBorderHue(context)
+        val finalHue = hue ?: getBorderHue(context)
+        val finalSat = sat ?: getBorderSat(context)
+        val finalVal = valPercent ?: getBorderVal(context)
         val finalRadius = radius ?: getRadius(context)
 
-        val borderColor = Color.HSVToColor(floatArrayOf(finalHue.toFloat(), 0.7f, 1.0f))
+        val borderColor = Color.HSVToColor(floatArrayOf(finalHue.toFloat(), finalSat / 100f, finalVal / 100f))
 
         card.radius = finalRadius.toFloat()
         card.strokeColor = borderColor
@@ -158,7 +178,7 @@ object ThemeManager {
     }
 
     fun getBtnColor(context: Context): Int {
-        return Color.HSVToColor(floatArrayOf(getBtnHue(context).toFloat(), 0.8f, 0.9f))
+        return Color.HSVToColor(floatArrayOf(getBtnHue(context).toFloat(), getBtnSat(context) / 100f, getBtnVal(context) / 100f))
     }
 
     fun applyFontToView(view: TextView, fontType: String? = null, fontSize: Int? = null) {

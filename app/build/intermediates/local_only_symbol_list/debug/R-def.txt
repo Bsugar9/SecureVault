@@ -39,7 +39,11 @@ id previewCardText
 id previewEditText
 id recyclerView
 id seekBorderHue
+id seekBorderSat
+id seekBorderVal
 id seekBtnHue
+id seekBtnSat
+id seekBtnVal
 id seekFontSize
 id seekGlow
 id seekRadius
