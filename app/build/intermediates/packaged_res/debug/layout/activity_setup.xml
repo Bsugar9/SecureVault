@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#121212">
+
+    <ImageView
+        android:id="@+id/setupBgImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:contentDescription="@null" />
+
+    <com.example.securedb.AnimationView
+        android:id="@+id/setupAnimationView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="32dp">
+
+        <!-- Top Spacer (reduced weight) -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/setupTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/setup_title"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/setup_subtitle"
+            android:textColor="#AAAAAA"
+            android:layout_marginBottom="32dp"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/setupPassInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/pass_hint"
+            android:inputType="textPassword"
+            android:imeOptions="flagNoExtractUi|actionNext"
+            android:importantForAutofill="no"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#88FFFFFF"
+            android:layout_marginBottom="16dp"
+            android:autofillHints="password" />
+
+        <EditText
+            android:id="@+id/setupConfirmInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/pass_hint_confirm"
+            android:inputType="textPassword"
+            android:imeOptions="flagNoExtractUi|actionDone"
+            android:importantForAutofill="no"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#88FFFFFF"
+            android:layout_marginBottom="16dp"
+            android:autofillHints="password" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCreateVault"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/setup_init" />
+
+        <!-- Bottom Spacer (increased weight to 6x the top) -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6" />
+
+    </LinearLayout>
+</FrameLayout>

@@ -1,0 +1,1 @@
+// Full CryptoManager from response

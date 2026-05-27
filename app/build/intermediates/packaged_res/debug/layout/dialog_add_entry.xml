@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_entry_title"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/inputTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_entry_title"
+        android:inputType="text"
+        android:importantForAutofill="no"
+        android:autofillHints="none"/>
+
+    <EditText
+        android:id="@+id/inputPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_entry_pass"
+        android:inputType="textVisiblePassword"
+        android:imeOptions="flagNoExtractUi|actionDone"
+        android:importantForAutofill="no"
+        android:layout_marginTop="8dp"
+        android:autofillHints="password"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/select_icon"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageButton android:id="@+id/icon0" android:layout_width="48dp" android:layout_height="48dp" android:src="@android:drawable/ic_lock_lock" android:background="?attr/selectableItemBackground" android:contentDescription="Lock"/>
+        <ImageButton android:id="@+id/icon1" android:layout_width="48dp" android:layout_height="48dp" android:src="@android:drawable/ic_dialog_email" android:background="?attr/selectableItemBackground" android:contentDescription="Email"/>
+        <ImageButton android:id="@+id/icon2" android:layout_width="48dp" android:layout_height="48dp" android:src="@android:drawable/ic_menu_camera" android:background="?attr/selectableItemBackground" android:contentDescription="Photo"/>
+        <ImageButton android:id="@+id/icon3" android:layout_width="48dp" android:layout_height="48dp" android:src="@android:drawable/ic_menu_compass" android:background="?attr/selectableItemBackground" android:contentDescription="Web"/>
+        <ImageButton android:id="@+id/icon4" android:layout_width="48dp" android:layout_height="48dp" android:src="@android:drawable/ic_menu_agenda" android:background="?attr/selectableItemBackground" android:contentDescription="Account"/>
+
+    </LinearLayout>
+
+</LinearLayout>
